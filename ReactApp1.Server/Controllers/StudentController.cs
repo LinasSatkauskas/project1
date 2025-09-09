@@ -20,7 +20,7 @@ public class StudentController(AppDbContext context) : ControllerBase
         List<StudentDto> results = [];
 
         foreach (var student in students) {
-            results.Add(new StudentDto(student.id, FullName: $"{student.FirstName} {student.LastName}", student.Email));
+            results.Add(new StudentDto(student.Id, FullName: $"{student.FirstName} {student.LastName}", student.Email));
         }
 
         return Ok(results);
