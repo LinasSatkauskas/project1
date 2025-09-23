@@ -1,4 +1,4 @@
-function getFullUrl(path: string): string {
+function getFullUrl(endpoint: string) {
     return `api/${endpoint}`
 }
 
@@ -12,12 +12,13 @@ function getHeaders(header = {}) {
     }
 }
 
-export async function getApi<T>(endpoint: string): Promise<T> | undefined> {
+export async function getApi<T>(endpoint: string):Promise<T|undefined> {
     const fullurl = getFullUrl(endpoint)
 
     try {
-        const response = await fetch(fullurl, getHeaders())
+        const result = await fetch(fullurl, getHeaders())
         return await result.json()
+    }
         catch(e: any) {
             console.error(e.message)
             return
@@ -26,7 +27,7 @@ export async function getApi<T>(endpoint: string): Promise<T> | undefined> {
 
     export async function postApi(
         endpoint: string,
-        data: record<string, any>,
+        data: Record<string, any>,
         methodType = '',
     ) {
     const fullurl = getFullUrl(endpoint)
@@ -76,13 +77,13 @@ export async function getApi<T>(endpoint: string): Promise<T> | undefined> {
 
 export async function putApi(
     endpoint: string,
-    data: record<string, any>,
+    data: Record<string, any>,
 ) {
     return postApi(endpoint, data, 'PUT')
 }
 export async function deleteApi(
     endpoint: string,
-    data: record<string, any>,
+    data: Record<string, any>,
 ) {
     return postApi(endpoint, data, 'DELETE')
 }

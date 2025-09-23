@@ -4,7 +4,7 @@ import {
 }
     from "react-router-dom";
 import Home from "./pages/HomePage/Home";
-import { Layoout } from "./pages/Layout";
+import { Layout } from "./pages/Layout";
 import Students from "./pages/StudentsPage/Students";
 
 export default function App() {
@@ -12,7 +12,7 @@ export default function App() {
     const router = createBrowserRouter([
         {
             path: "/",
-            Component: Layoout,
+            Component: Layout,
             children: [
 
                 {
