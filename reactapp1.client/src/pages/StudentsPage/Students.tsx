@@ -1,6 +1,6 @@
 ﻿import { useEffect, useState } from 'react';
 import { IStudent } from "../../interfaces/IStudent";
-import { getApi } from "../../api";
+import { getApi, putApi } from "../../api";
 import { Modal } from "../components/Modal";
 import { StudentForm } from "./components/StudentForm";
 

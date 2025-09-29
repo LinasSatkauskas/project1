@@ -1,5 +1,5 @@
 import { XMarkIcon } from '@heroicons/react/24/solid'
-import { JSX } from 'react/jsx-runtime';
+import React from 'react'
 
 type ModalProps = { visibleModal: boolean; title: string; children: JSX.Element; setVisibleModal: (s: boolean) => void }
 
