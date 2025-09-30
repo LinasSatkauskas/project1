@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using ReactApp1.Server.Data;
+using ReactApp1.Server.Services;
 
 namespace ReactApp1.Server
 {
@@ -29,7 +30,8 @@ namespace ReactApp1.Server
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddScoped<IGetStudentService, GetStudentService>();
+            builder.Services.AddScoped<ISaveStudentService, SaveStudentService>();
             var app = builder.Build();
 
             app.UseDefaultFiles();

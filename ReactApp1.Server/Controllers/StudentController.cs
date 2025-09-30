@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ReactApp1.Server.Data;
 using ReactApp1.Server.Models.DTOs;
+using ReactApp1.Server.Services;
 
 namespace ReactApp1.Server.Controllers;
 
@@ -10,18 +11,13 @@ namespace ReactApp1.Server.Controllers;
 
 
 
-public class StudentController(AppDbContext context) : ControllerBase
+public class StudentsController(IGetStudentService getStudentService, ISaveStudentService saveStudentService) : ControllerBase
 {
     [HttpGet]
 
     public async Task<IActionResult> GetAll()
     {
-        var students = await context.Students.ToListAsync();
-        List<StudentDto> results = [];
-
-        foreach (var student in students) {
-            results.Add(new StudentDto(student.Id, student.FirstName, student.LastName, student.Email));
-        }
+        var results = await getStudentService.GetAll();
 
         return Ok(results);
 
@@ -33,15 +29,7 @@ public class StudentController(AppDbContext context) : ControllerBase
 
     public async Task<IActionResult> Put(int id, StudentDto dto)
     {
-        var student = await context.Students.FirstOrDefaultAsync(Student => Student.Id == id);
-        if (student != null)
-
-        {
-
-            student.setValues(dto.FirstName, dto.LastName, dto.Email);
-            context.Students.Update(student);
-            await context.SaveChangesAsync();
-        }
+      await saveStudentService.Update(id, dto);
         return Ok();
     }
 }

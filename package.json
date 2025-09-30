@@ -5,6 +5,9 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
-    "node.js": "^0.0.1-security"
+    "node": "^24.9.0",
+    "node.js": "^0.0.1-security",
+    "react-hook-form": "^7.63.0",
+    "zustand": "^5.0.8"
   }
 }
