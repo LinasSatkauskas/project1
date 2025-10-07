@@ -11,30 +11,30 @@ namespace ReactApp1.Server.Controllers;
 
 
 
-public class StudentController(IGetStudentService getStudentService, ISaveStudentService saveStudentService) : ControllerBase
+public class LecturersController(IGetLecturerService getLecturerService, ISaveLecturerService saveLecturerService) : ControllerBase
 {
     [HttpGet]
 
     public async Task<IActionResult> GetAll()
     {
-        var results = await getStudentService.GetAll();
+        var results = await getLecturerService.GetAll();
 
         return Ok(results);
 
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post(StudentDto dto)
+    public async Task<IActionResult> Post(LecturerDto dto)
     {
-        await saveStudentService.Store(dto);
+        await saveLecturerService.Store(dto);
         return Ok();
     }
 
     [HttpPut("{id:int}")]
 
-    public async Task<IActionResult> Put(int id, StudentDto dto)
+    public async Task<IActionResult> Put(int id, LecturerDto dto)
     {
-      await saveStudentService.Update(id, dto);
+        await saveLecturerService.Update(id, dto);
         return Ok();
     }
 }

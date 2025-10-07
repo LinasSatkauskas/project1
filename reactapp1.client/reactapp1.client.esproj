@@ -14,4 +14,9 @@
   <ItemGroup>
     <None Include="tsconfig.json" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\pages\GroupsPage\" />
+    <Folder Include="src\pages\SubjectsPage\" />
+    <Folder Include="src\pages\ProgrammesPage\" />
+  </ItemGroup>
 </Project>

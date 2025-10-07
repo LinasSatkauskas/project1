@@ -32,6 +32,8 @@ namespace ReactApp1.Server
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IGetStudentService, GetStudentService>();
             builder.Services.AddScoped<ISaveStudentService, SaveStudentService>();
+            builder.Services.AddScoped<IGetLecturerService, GetLecturerService>();
+            builder.Services.AddScoped<ISaveLecturerService, SaveLecturerService>();
             var app = builder.Build();
 
             app.UseDefaultFiles();

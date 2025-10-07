@@ -6,6 +6,8 @@ import {
 import Home from "./pages/HomePage/Home";
 import { Layout } from "./pages/Layout";
 import Students from "./pages/StudentsPage/Students";
+import Lecturers from "./pages/LecturersPage/Lecturers";
+import path from "node:path/win32";
 
 export default function App() {
 
@@ -21,7 +23,12 @@ export default function App() {
         {
             path: "students",
             Component: Students
-        }
+                },
+                {
+                path: "lecturers",
+                Component: Lecturers
+                }
+
             ]
         },
 

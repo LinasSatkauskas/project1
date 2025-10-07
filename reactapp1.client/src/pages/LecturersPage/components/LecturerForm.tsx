@@ -1,16 +1,16 @@
 ﻿import { useForm } from "react-hook-form"
-import { IStudent } from "../../../interfaces/IStudent";
+import { ILecturer } from "../../../interfaces/ILecturer";
 import { useEffect } from "react";
 import { formStyle } from "../../../styles/formStyle";
 
-type StudentFormProps = {
-    student: IStudent | undefined;
-    storeStudent: (data: IStudent) => void
+type LecturerFormProps = {
+    lecturer: ILecturer | undefined;
+    storeLecturer: (data: ILecturer) => void
 }
 
 
-export function StudentForm({ student, storeStudent }: StudentFormProps) {
-    const { register, handleSubmit, reset } = useForm<IStudent>({
+export function LecturerForm({ lecturer, storeLecturer }: LecturerFormProps) {
+    const { register, handleSubmit, reset } = useForm<ILecturer>({
         defaultValues: {
             id: undefined,
             firstName: "",
@@ -20,8 +20,8 @@ export function StudentForm({ student, storeStudent }: StudentFormProps) {
     });
 
     useEffect(() => {
-        if (student) reset(student); // only reset if editing
-    }, [student, reset]);
+        if (lecturer) reset(lecturer); // only reset if editing
+    }, [lecturer, reset]);
 
     return (
         <form
@@ -33,7 +33,7 @@ export function StudentForm({ student, storeStudent }: StudentFormProps) {
                     data.id = undefined;
                 }
 
-                storeStudent(data);
+                storeLecturer(data);
 
                 if (submitter?.value === "new") {
                     reset({
