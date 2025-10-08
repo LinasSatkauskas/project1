@@ -75,6 +75,7 @@ export function LecturerForm({ lecturer, storeLecturer }: LecturerFormProps) {
             </div>
             <button className={formStyle.button} type="submit" value="update">Atnaujinti</button>
             <button className={formStyle.button} type="submit" value="new">Pridėti naują</button>
+            <button className={formStyle.button} type="submit" value="new">Ištrinti</button>
         </form>
     )
 }

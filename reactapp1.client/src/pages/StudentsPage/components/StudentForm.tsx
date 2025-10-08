@@ -41,7 +41,9 @@ export function StudentForm({ student, storeStudent }: StudentFormProps) {
                         firstName: "",
                         lastName: "",
                         email: "",
-                    });
+                    }
+
+                    );
                 }
             })}
 
@@ -75,6 +77,7 @@ export function StudentForm({ student, storeStudent }: StudentFormProps) {
             </div>
             <button className={formStyle.button} type="submit" value="update">Atnaujinti</button>
             <button className={formStyle.button} type="submit" value="new">Pridėti naują</button>
+            <button className={formStyle.button} type="submit" value="new">Ištrinti</button>
         </form>
     )
 }

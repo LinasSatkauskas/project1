@@ -11,7 +11,7 @@ namespace ReactApp1.Server.Controllers;
 
 
 
-public class StudentController(IGetStudentService getStudentService, ISaveStudentService saveStudentService) : ControllerBase
+public class StudentsController(IGetStudentService getStudentService, ISaveStudentService saveStudentService, IDeleteStudentService deleteStudentService) : ControllerBase
 {
     [HttpGet]
 
@@ -37,4 +37,13 @@ public class StudentController(IGetStudentService getStudentService, ISaveStuden
       await saveStudentService.Update(id, dto);
         return Ok();
     }
+
+    [HttpDelete("{id:int}")]
+
+    public async Task<IActionResult> Delete(int id)
+    {
+        await deleteStudentService.Delete(id);
+        return Ok();
+    }
+
 }
