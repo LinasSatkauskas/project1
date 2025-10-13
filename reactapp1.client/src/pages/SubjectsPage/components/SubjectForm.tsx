@@ -1,27 +1,27 @@
-﻿import { useForm } from "react-hook-form";
-import { IStudent } from "../../../interfaces/IStudent";
+﻿import { useForm } from "react-hook-form"
+import { ISubject } from "../../../interfaces/ISubject";
 import { useEffect } from "react";
 import { formStyle } from "../../../styles/formStyle";
 
-type StudentFormProps = {
-    student: IStudent | undefined;
-    storeStudent: (data: IStudent) => void;
-    deleteStudent?: (id: number | undefined) => void;
+type SubjectFormProps = {
+    subject: ISubject | undefined;
+    storeSubject: (data: ISubject) => void;
+    deleteSubject?: (id: number | undefined) => void;
 }
 
-export function StudentForm({ student, storeStudent, deleteStudent }: StudentFormProps) {
-      const { register, handleSubmit, reset } = useForm<IStudent>({
+export function SubjectForm({ subject, storeSubject, deleteSubject }: SubjectFormProps) {
+    const { register, handleSubmit, reset, getValues } = useForm<ISubject>({
         defaultValues: {
             id: undefined,
-            firstName: "",
-            lastName: "",
-            email: "",
+            name: "",
+            code: "",
+            description: "",
         },
     });
 
     useEffect(() => {
-        if (student) reset(student);
-    }, [student, reset]);
+        if (subject) reset(subject);
+    }, [subject, reset]);
 
     return (
         <form
@@ -29,14 +29,14 @@ export function StudentForm({ student, storeStudent, deleteStudent }: StudentFor
                 const submitter = (e?.nativeEvent as SubmitEvent).submitter as HTMLButtonElement;
 
                 if (submitter?.value === "delete") {
-                    if (deleteStudent) {
-                        deleteStudent(data.id);
+                    if (deleteSubject) {
+                        deleteSubject(data.id);
                     }
                     reset({
                         id: undefined,
-                        firstName: "",
-                        lastName: "",
-                        email: "",
+                        name: "",
+                        code: "",
+                        description: "",
                     });
                     return;
                 }
@@ -45,14 +45,14 @@ export function StudentForm({ student, storeStudent, deleteStudent }: StudentFor
                     data.id = undefined;
                 }
 
-                storeStudent(data);
+                storeSubject(data);
 
                 if (submitter?.value === "new") {
                     reset({
                         id: undefined,
-                        firstName: "",
-                        lastName: "",
-                        email: "",
+                        name: "",
+                        code: "",
+                        description: "",
                     });
                 }
             })}
@@ -60,27 +60,27 @@ export function StudentForm({ student, storeStudent, deleteStudent }: StudentFor
         >
             <input type="hidden" {...register("id")} />
             <div>
-                <label htmlFor="firstName" className={formStyle.label}>Vardas</label>
+                <label htmlFor="name" className={formStyle.label}>Pavadinimas</label>
                 <input
-                    id="firstName"
+                    id="name"
                     className={formStyle.input}
-                    {...register("firstName", { required: true, maxLength: 30 })}
+                    {...register("name", { required: true, maxLength: 50 })}
                 />
             </div>
             <div>
-                <label htmlFor="lastName" className={formStyle.label}>Pavardė</label>
+                <label htmlFor="code" className={formStyle.label}>Kodas</label>
                 <input
-                    id="lastName"
+                    id="code"
                     className={formStyle.input}
-                    {...register("lastName", { required: true, maxLength: 30 })}
+                    {...register("code", { required: true, maxLength: 20 })}
                 />
             </div>
             <div>
-                <label htmlFor="email" className={formStyle.label}>Paštas</label>
+                <label htmlFor="description" className={formStyle.label}>Aprašymas</label>
                 <input
-                    id="email"
+                    id="description"
                     className={formStyle.input}
-                    {...register("email", { required: true, maxLength: 40 })}
+                    {...register("description", { required: true, maxLength: 200 })}
                 />
             </div>
             <button className={formStyle.button} type="submit" value="update">Atnaujinti</button>

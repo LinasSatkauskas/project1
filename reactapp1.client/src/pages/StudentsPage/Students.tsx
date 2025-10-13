@@ -1,6 +1,6 @@
 ﻿import { useEffect, useState } from "react";
 import { IStudent } from "../../interfaces/IStudent";
-import { getApi, postApi, putApi } from "../../api"; // make sure postApi exists
+import { getApi, postApi, putApi, deleteApi } from "../../api";
 import { Modal } from "../components/Modal";
 import { StudentForm } from "./components/StudentForm";
 
@@ -16,12 +16,16 @@ export default function Students() {
         setVisibleModal(false);
 
         if (student.id) {
-            // Update existing student
             putApi(`students/${student.id}`, student).then(() => getStudents());
         } else {
-            // Create new student
             postApi("students", student).then(() => getStudents());
         }
+    };
+
+    const deleteStudent = (id: number | undefined) => {
+        if (!id) return;
+        setVisibleModal(false);
+        deleteApi(`students/${id}`, {}).then(() => getStudents());
     };
 
     const editHandler = (student: IStudent) => {
@@ -30,7 +34,7 @@ export default function Students() {
     };
 
     const addHandler = () => {
-        setEditStudent(undefined); // clear previous student
+        setEditStudent(undefined);
         setVisibleModal(true);
     };
 
@@ -44,9 +48,13 @@ export default function Students() {
                 <Modal
                     visibleModal={visibleModal}
                     setVisibleModal={setVisibleModal}
-                    title="Studentų forma"
+                    title="Student Form"
                 >
-                    <StudentForm storeStudent={storeStudent} student={editStudent} />
+                    <StudentForm
+                        storeStudent={storeStudent}
+                        student={editStudent}
+                        deleteStudent={deleteStudent}
+                    />
                 </Modal>
             )}
 
@@ -56,24 +64,37 @@ export default function Students() {
                     className="bg-blue-500 text-white px-4 py-2 rounded"
                     onClick={addHandler}
                 >
-                    Change Student
+                    Add Student
                 </button>
             </div>
 
-            <div>
-                {students.map((student) => (
-                    <div key={student.id} className="mb-2">
-                        <button
-                            type="button"
-                            className="underline text-blue-600 mr-2"
-                            onClick={() => editHandler(student)}
-                        >
-                            {student.firstName} {student.lastName}
-                        </button>
-                        {student.email}
-                    </div>
-                ))}
-            </div>
+            <table className="min-w-full border border-gray-300">
+                <thead>
+                    <tr className="bg-gray-100">
+                        <th className="border px-4 py-2 text-left">First Name</th>
+                        <th className="border px-4 py-2 text-left">Last Name</th>
+                        <th className="border px-4 py-2 text-left">Email</th>
+                        <th className="border px-4 py-2"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {students.map((student) => (
+                        <tr key={student.id} className="border-b">
+                            <td className="border px-4 py-2">{student.firstName}</td>
+                            <td className="border px-4 py-2">{student.lastName}</td>
+                            <td className="border px-4 py-2">{student.email}</td>
+                            <td className="border px-4 py-2">
+                                <button
+                                    className="underline text-blue-600"
+                                    onClick={() => editHandler(student)}
+                                >
+                                    Edit
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 }

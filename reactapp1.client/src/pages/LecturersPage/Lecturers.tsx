@@ -1,6 +1,6 @@
 ﻿import { useEffect, useState } from "react";
 import { ILecturer } from "../../interfaces/ILecturer";
-import { getApi, postApi, putApi } from "../../api"; // make sure postApi exists
+import { getApi, postApi, putApi, deleteApi } from "../../api";
 import { Modal } from "../components/Modal";
 import { LecturerForm } from "./components/LecturerForm";
 
@@ -16,12 +16,16 @@ export default function Lecturers() {
         setVisibleModal(false);
 
         if (lecturer.id) {
-            // Update existing lecturer
             putApi(`lecturers/${lecturer.id}`, lecturer).then(() => getLecturers());
         } else {
-            // Create new lecturer
             postApi("lecturers", lecturer).then(() => getLecturers());
         }
+    };
+
+    const deleteLecturer = (id: number | undefined) => {
+        if (!id) return;
+        setVisibleModal(false);
+        deleteApi(`lecturers/${id}`, {}).then(() => getLecturers());
     };
 
     const editHandler = (lecturer: ILecturer) => {
@@ -30,7 +34,7 @@ export default function Lecturers() {
     };
 
     const addHandler = () => {
-        setEditLecturer(undefined); // clear previous student
+        setEditLecturer(undefined);
         setVisibleModal(true);
     };
 
@@ -44,9 +48,13 @@ export default function Lecturers() {
                 <Modal
                     visibleModal={visibleModal}
                     setVisibleModal={setVisibleModal}
-                    title="Dėstytojų forma"
+                    title="Lecturer Form"
                 >
-                    <LecturerForm storeLecturer={storeLecturer} lecturer={editLecturer} />
+                    <LecturerForm
+                        storeLecturer={storeLecturer}
+                        lecturer={editLecturer}
+                        deleteLecturer={deleteLecturer}
+                    />
                 </Modal>
             )}
 
@@ -60,20 +68,33 @@ export default function Lecturers() {
                 </button>
             </div>
 
-            <div>
-                {lecturers.map((lecturer) => (
-                    <div key={lecturer.id} className="mb-2">
-                        <button
-                            type="button"
-                            className="underline text-blue-600 mr-2"
-                            onClick={() => editHandler(lecturer)}
-                        >
-                            {lecturer.firstName} {lecturer.lastName}
-                        </button>
-                        {lecturer.email}
-                    </div>
-                ))}
-            </div>
+            <table className="min-w-full border border-gray-300">
+                <thead>
+                    <tr className="bg-gray-100">
+                        <th className="border px-4 py-2 text-left">First Name</th>
+                        <th className="border px-4 py-2 text-left">Last Name</th>
+                        <th className="border px-4 py-2 text-left">Email</th>
+                        <th className="border px-4 py-2"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {lecturers.map((lecturer) => (
+                        <tr key={lecturer.id} className="border-b">
+                            <td className="border px-4 py-2">{lecturer.firstName}</td>
+                            <td className="border px-4 py-2">{lecturer.lastName}</td>
+                            <td className="border px-4 py-2">{lecturer.email}</td>
+                            <td className="border px-4 py-2">
+                                <button
+                                    className="underline text-blue-600"
+                                    onClick={() => editHandler(lecturer)}
+                                >
+                                    Edit
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 }

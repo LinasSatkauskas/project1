@@ -1,7 +1,6 @@
-
-
 export interface IProgramme {
     id?: number;
-    name: string;           
+    name: string;
     durationYears?: number;
+    subjectIds?: number[]; 
 }
